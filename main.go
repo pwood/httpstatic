@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/gorilla/handlers"
 	"github.com/sethvargo/go-envconfig"
 	"log"
 	"net/http"
+	"os"
 )
 
 type Config struct {
@@ -24,9 +26,11 @@ func main() {
 	mux := http.NewServeMux()
 	mux.Handle("/", http.FileServer(http.Dir(cfg.Path)))
 
+	log.Printf("port=%d path=%s", cfg.Port, cfg.Port)
+
 	s := &http.Server{
 		Addr:    fmt.Sprintf(":%d", cfg.Port),
-		Handler: mux,
+		Handler: handlers.LoggingHandler(os.Stdout, mux),
 	}
 
 	if err := s.ListenAndServe(); err != nil {
