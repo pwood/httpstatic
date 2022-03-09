@@ -11,8 +11,8 @@ import (
 )
 
 type Config struct {
-	Path string `env:"PATH,default=/srv"`
-	Port int    `env:"PORT,default=80"`
+	Path string `env:"SRV_PATH,default=/srv"`
+	Port int    `env:"SRV_PORT,default=80"`
 }
 
 func main() {
