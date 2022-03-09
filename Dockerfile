@@ -13,8 +13,12 @@ COPY ./ ./
 ENV CGO_ENABLED=0
 RUN go build -o /httpstatic .
 
+FROM ubuntu:22.04 AS ubuntu-source
+
 FROM scratch AS final
 
+COPY --from=ubuntu-source /usr/share/mime/globs2 /usr/share/mime/globs2
+COPY --from=ubuntu-source /etc/mime.types /etc/mime.types
 COPY --from=builder /user/group /user/passwd /etc/
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /httpstatic /httpstatic
