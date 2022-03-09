@@ -26,7 +26,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.Handle("/", http.FileServer(http.Dir(cfg.Path)))
 
-	log.Printf("port=%d path=%s", cfg.Port, cfg.Port)
+	log.Printf("port=%d path=%s", cfg.Port, cfg.Path)
 
 	s := &http.Server{
 		Addr:    fmt.Sprintf(":%d", cfg.Port),
